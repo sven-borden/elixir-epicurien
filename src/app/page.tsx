@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 import { LatestCocktail } from "~/app/_components/cocktail";
 import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
@@ -36,6 +38,7 @@ export default async function Home() {
           </div>
         </div>
         <Analytics />
+        <SpeedInsights />
       </main>
     </HydrateClient>
   );
