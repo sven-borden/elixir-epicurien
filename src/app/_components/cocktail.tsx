@@ -22,23 +22,6 @@ export function LatestCocktail() {
       ) : (
         <p>You have no cocktails yet.</p>
       )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          createCocktail.mutate({ name });
-        }}
-      >
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter cocktail name"
-          className="border p-2"
-        />
-        <button type="submit" className="bg-blue-500 text-white p-2 mt-2">
-          Add Cocktail
-        </button>
-      </form>
     </div>
   );
 }
