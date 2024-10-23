@@ -14,18 +14,19 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
+// No additional models to place here
+model Cocktail {
+    id          String   @id @default(cuid())
+    name        String
+    description String?
+    ingredients String[]
+    instructions String?
+    image       String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    userId      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
 // Necessary for Next auth
 model Account {
     id                       String  @id @default(cuid())
@@ -62,7 +63,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    cocktails     Cocktail[]
 }
 
 model VerificationToken {
