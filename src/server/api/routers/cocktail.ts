@@ -79,6 +79,9 @@ export const cocktailRouter = createTRPCRouter({
 
       const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
       
+      const imagePrompt = `${cocktailData.title}: ${cocktailData.description}`;
+      const base64Image = await generateImage({ prompt: imagePrompt });
+
       if (!ctx.session?.user?.id) {
         const newCocktail = await ctx.db.cocktail.create({
           data: {
@@ -86,37 +89,56 @@ export const cocktailRouter = createTRPCRouter({
             description: cocktailData.description,
             ingredients: cocktailData.ingredients,
             instructions: cocktailData.instructions,
+            image: base64Image,
           },
         });
         return newCocktail;
       }
+
       const newCocktail = await ctx.db.cocktail.create({
         data: {
           name: cocktailData.title,
           description: cocktailData.description,
           ingredients: cocktailData.ingredients,
           instructions: cocktailData.instructions,
+          image: base64Image,
           user: { connect: { id: ctx.session.user.id } },
         },
       });
       return newCocktail;
   }),
-
-  generateImage: publicProcedure
-    .input(z.object({ prompt: z.string().min(1) }))
-    .mutation(async ({ input }) => {
-      const model = process.env.OPENAI_MODEL_ID!;
-
-      const response = await openai.images.generate({
-        model: model,
-        prompt: input.prompt,
-        n: 1,
-        size: "1024x1792",
-        style: "vivid",
-        response_format: "b64_json",
-      });
-
-      const image_b64_json = response.data.data[0].url;
-      return { imageUrl };
-  }),
 });
+
+
+/**
+ * Generates an image based on the provided prompt using the OpenAI API.
+ *
+ * @param arg0 - An object containing the prompt string.
+ * @param arg0.prompt - The prompt to generate the image from.
+ * @returns A promise that resolves to a base64 encoded image string.
+ *
+ * @throws Will throw an error if the OpenAI API request fails.
+ *
+ * @example
+ * ```typescript
+ * const image = await generateImage({ prompt: "A futuristic cityscape" });
+ * console.log(image); // Logs the base64 encoded image string
+ * ```
+ */
+async function generateImage(arg0: { prompt: string; }) {
+  const model = process.env.OPENAI_MODEL_ID!;
+  console.log('Generate Image with prompt: ' + arg0.prompt);
+  const response = await openai.images.generate({
+    model: model,
+    prompt: arg0.prompt,
+    n: 1,
+    size: "1024x1792",
+    style: "vivid",
+    response_format: "b64_json",
+  });
+
+  const image = response.data[0]?.b64_json ? 'data:image/png;base64,' + response.data[0].b64_json : '';
+  console.log(image)
+  return image;
+}
+
