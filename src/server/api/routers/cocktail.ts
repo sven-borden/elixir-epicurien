@@ -45,18 +45,18 @@ export const cocktailRouter = createTRPCRouter({
         model: model,
         max_tokens: 1024,
         temperature: 0,
-        system: "You are the world expert in mixology. Create a recipe for a refreshing cocktail with information provided by the user. " + 
-          "The recipe should be easy to follow and include a list of ingredients, their quantities and instructions." +
+        system: 'You are the world expert in mixology. Create a recipe for a refreshing cocktail with information provided by the user. ' + 
+          'The recipe should be easy to follow and include a list of ingredients, their quantities and instructions.' +
           "/n" +
-          "Answer using the json format with the following structure:" +
+          'Answer using the json format with the following structure:' +
           "/n" +
-          "Title" +
+          '"title"' +
+          '"/n"' +
+          '"description"' +
           "/n" +
-          "Short description" +
+          '"ingredients"' +
           "/n" +
-          "Ingredients:" +
-          "/n" +
-          "Instructions: (no numbering start)",
+          '"instructions"',
         messages: [
           {
             "role": "user",
@@ -74,10 +74,10 @@ export const cocktailRouter = createTRPCRouter({
         console.log(cocktailData)
         const newCocktail = await ctx.db.cocktail.create({
           data: {
-            name: cocktailData.Title,
-            description: cocktailData.Description,
-            ingredients: cocktailData.Ingredients,
-            instructions: cocktailData.Instructions,
+            name: cocktailData.title,
+            description: cocktailData.description,
+            ingredients: cocktailData.ingredients,
+            instructions: cocktailData.instructions,
             user: { connect: { id: ctx.session.user.id } },
           },
         });
