@@ -2,7 +2,15 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface Cocktail {
+  id: string;
   name: string;
+  description?: string | null;
+  ingredients: string[];
+  instructions: string[];
+  image?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
 }
 
 interface CocktailContextType {
