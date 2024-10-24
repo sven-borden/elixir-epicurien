@@ -39,7 +39,7 @@ export const cocktailRouter = createTRPCRouter({
     generateNew: protectedProcedure
     .input(z.object({ query: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      const model = process.env.ANTHROPIC_MODEL_ID as string;
+      const model = process.env.ANTHROPIC_MODEL_ID!;
 
       const anthropicMessage = await anthropic.messages.create({
         model: model,
@@ -69,7 +69,14 @@ export const cocktailRouter = createTRPCRouter({
           }
         ]
         });
-        const cocktailData = JSON.parse(anthropicMessage.content?.[0]?.text ?? "{}");
+        interface CocktailData {
+          title: string;
+          description: string;
+          ingredients: string[];
+          instructions: string[];
+        }
+
+        const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
        
         console.log(cocktailData)
         const newCocktail = await ctx.db.cocktail.create({

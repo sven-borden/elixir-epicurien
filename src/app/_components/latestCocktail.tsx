@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCocktail } from '~/app/_contexts/CocktailContext';
 import { api } from "~/trpc/react";
 
 export function LatestCocktail() {
