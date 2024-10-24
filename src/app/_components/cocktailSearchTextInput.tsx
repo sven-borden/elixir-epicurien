@@ -7,7 +7,7 @@ export default function CocktailSearchTextInput() {
   const createCocktail = api.cocktail.generateNew.useMutation();
 
   const handleSubmit = () => {
-    createCocktail.mutate({ name: inputValue });
+    createCocktail.mutate({ query: inputValue });
   };
 
   return (
