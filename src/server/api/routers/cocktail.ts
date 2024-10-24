@@ -138,7 +138,6 @@ async function generateImage(arg0: { prompt: string; }) {
   });
 
   const image = response.data[0]?.b64_json ? 'data:image/png;base64,' + response.data[0].b64_json : '';
-  console.log(image)
   return image;
 }
 
