@@ -46,7 +46,9 @@ export const cocktailRouter = createTRPCRouter({
         max_tokens: 1024,
         temperature: 0,
         system: 'You are the world expert in mixology. Create a recipe for a refreshing cocktail with information provided by the user. ' + 
-          'The recipe should be easy to follow and include a list of ingredients, their quantities and instructions.' +
+          'The recipe should be easy to follow and include a list of ingredients, their quantities and instructions. ' +
+          'If you are not able to provide a recipe, reply with the recipe of a water only cocktail with humoristics ingredients and instructions' +
+          'Instructions should be provided as a not numbered list' +
           "/n" +
           'Answer using the json format with the following structure:' +
           "/n" +
@@ -76,9 +78,10 @@ export const cocktailRouter = createTRPCRouter({
           instructions: string[];
         }
 
+        console.log(anthropicMessage.content[0]);
+
         const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
        
-        console.log(cocktailData)
         const newCocktail = await ctx.db.cocktail.create({
           data: {
             name: cocktailData.title,

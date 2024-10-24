@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { LatestCocktail } from "~/app/_components/LatestCocktail";
@@ -7,7 +7,6 @@ import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import CocktailSearchTextInput from "~/app/_components/CocktailSearchTextInput";
 import { CocktailProvider } from "~/app/_contexts/CocktailContext";
-
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -33,11 +32,11 @@ export default async function Home() {
             <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
               Elixir <span className="text-[hsl(280,100%,70%)]">Epicurien</span>
             </h1>
-            <div className="flex flex-col items-center gap-2">
-              <div className="flex flex-col items-center justify-center gap-4">
-                {session?.user && <CocktailSearchTextInput />}
-                {session?.user && <LatestCocktail />}
-              </div>
+            <div className="flex flex-col items-center gap-2 w-full">
+              {session?.user && <CocktailSearchTextInput />}
+            </div>
+            <div className="flex flex-col items-center gap-2 w-full">
+              {session?.user && <LatestCocktail />}
             </div>
           </div>
           <Analytics />
