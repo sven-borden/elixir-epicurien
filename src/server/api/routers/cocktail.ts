@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
+  publicProcedure,
 } from "~/server/api/trpc";
 
 import Anthropic from "@anthropic-ai/sdk";
@@ -12,18 +13,17 @@ const anthropic = new Anthropic({
 });
 
 export const cocktailRouter = createTRPCRouter({
-  create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      return ctx.db.cocktail.create({
-        data: {
-          name: input.name,
-          user: { connect: { id: ctx.session.user.id } },
-        },
+  getLatest: publicProcedure.query(async ({ ctx }) => {
+    // If there is no user session, fetch the latest cocktail without filtering by user
+    if (!ctx.session?.user?.id) {
+      const cocktail = await ctx.db.cocktail.findFirst({
+      orderBy: { createdAt: "desc" },
       });
-    }),
 
-  getLatest: protectedProcedure.query(async ({ ctx }) => {
+      return cocktail ?? null;
+    }
+
+    // Fetch the latest cocktail filtered by the current user session
     const cocktail = await ctx.db.cocktail.findFirst({
       orderBy: { createdAt: "desc" },
       where: { user: { id: ctx.session.user.id } },
@@ -36,7 +36,7 @@ export const cocktailRouter = createTRPCRouter({
     return "you can now see this secret message!";
     }),
 
-    generateNew: protectedProcedure
+    generateNew: publicProcedure
     .input(z.object({ query: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       const model = process.env.ANTHROPIC_MODEL_ID!;
@@ -82,6 +82,17 @@ export const cocktailRouter = createTRPCRouter({
 
         const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
        
+        if (!ctx.session?.user?.id) {
+          const newCocktail = await ctx.db.cocktail.create({
+            data: {
+              name: cocktailData.title,
+              description: cocktailData.description,
+              ingredients: cocktailData.ingredients,
+              instructions: cocktailData.instructions,
+            },
+          });
+          return newCocktail;
+        }
         const newCocktail = await ctx.db.cocktail.create({
           data: {
             name: cocktailData.title,
@@ -91,7 +102,6 @@ export const cocktailRouter = createTRPCRouter({
             user: { connect: { id: ctx.session.user.id } },
           },
         });
-
-      return newCocktail;
+        return newCocktail;
     }),
 });

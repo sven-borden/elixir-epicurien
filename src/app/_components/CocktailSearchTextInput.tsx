@@ -39,14 +39,14 @@ export default function CocktailSearchTextInput() {
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         className="rounded px-4 py-2 text-black"
-        placeholder="Enter cocktail name"
+        placeholder="Ask for a cocktail recipe..."
       />
       <button
         onClick={handleSubmit}
         className={`ml-2 rounded px-4 py-2 text-white ${loading ? 'bg-gray-500' : 'bg-blue-500'}`}
         disabled={loading}
       >
-        {loading ? 'Loading...' : 'Submit'}
+        {loading ? 'Loading...' : 'Generate a cocktail'}
       </button>
     </div>
   );

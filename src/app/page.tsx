@@ -33,10 +33,10 @@ export default async function Home() {
               Elixir <span className="text-[hsl(280,100%,70%)]">Epicurien</span>
             </h1>
             <div className="flex flex-col items-center gap-2 w-full">
-              {session?.user && <CocktailSearchTextInput />}
+              <CocktailSearchTextInput />
             </div>
             <div className="flex flex-col items-center gap-2 w-full">
-              {session?.user && <LatestCocktail />}
+              <LatestCocktail />
             </div>
           </div>
           <Analytics />

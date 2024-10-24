@@ -10,7 +10,7 @@ interface Cocktail {
   image?: string | null;
   createdAt: Date;
   updatedAt: Date;
-  userId: string;
+  userId: string | null;
 }
 
 interface CocktailContextType {
