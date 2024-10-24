@@ -30,4 +30,13 @@ export const cocktailRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
+
+  generateNew: protectedProcedure.mutation(async ({ ctx }) => {
+    return ctx.db.cocktail.create({
+      data: {
+        name: "margarita",
+        user: { connect: { id: ctx.session.user.id } },
+      },
+    });
+  }),
 });
