@@ -1,15 +1,14 @@
 "use client";
 
 import { useCocktail } from '~/app/_contexts/CocktailContext';
-import { api } from "~/trpc/react";
 
 export function LatestCocktail() {
-  const [latestcocktail] = api.cocktail.getLatest.useSuspenseQuery();
+  const { latestCocktail } = useCocktail();
 
   return (
     <div className="w-full max-w-xs">
-      {latestcocktail ? (
-        <p>Your most recent cocktail: {latestcocktail.name}</p>
+      {latestCocktail ? (
+        <p>Your most recent cocktail: {latestCocktail.name}</p>
       ) : (
         <p>You have no cocktails yet.</p>
       )}

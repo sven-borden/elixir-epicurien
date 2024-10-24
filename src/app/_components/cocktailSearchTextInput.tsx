@@ -3,22 +3,21 @@ import { useState } from 'react';
 import { api } from '~/trpc/react';
 import { useCocktail } from '~/app/_contexts/CocktailContext';
 
-
 export default function CocktailSearchTextInput() {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const { setLatestCocktail } = useCocktail();
 
-
   const createCocktail = api.cocktail.generateNew.useMutation({
     onMutate: () => {
       setLoading(true);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       setLoading(false);
+      setLatestCocktail(data);
     },
     onError: () => {
-      setLoading(false); 
+      setLoading(false);
     }
   });
 
