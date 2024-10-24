@@ -26,6 +26,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
     ANTHROPIC_API_KEY: z.string(),
     ANTHROPIC_MODEL_ID: z.string(),
+    OPENAI_API_KEY: z.string(),
+    OPENAI_MODEL_ID: z.string(),
   },
 
   /**
@@ -50,6 +52,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
     ANTHROPIC_MODEL_ID: process.env.ANTHROPIC_MODEL_ID,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    OPENAI_MODEL_ID: process.env.OPENAI_MODEL_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
