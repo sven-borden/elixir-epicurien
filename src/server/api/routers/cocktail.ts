@@ -41,7 +41,7 @@ export const cocktailRouter = createTRPCRouter({
     const anthropicMessage = await anthropic.messages.create({
       model: model,
       max_tokens: 1024,
-      temperature: 0,
+      temperature: 0.5,
       system: 'You are the world expert in mixology. Create a recipe for a refreshing cocktail with information provided by the user. ' + 
         'The recipe should be easy to follow and include a list of ingredients, their quantities and instructions. ' +
         'If you are not able to provide a recipe, reply with the recipe of a water only cocktail with humoristics ingredients and instructions' +
