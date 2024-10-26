@@ -38,7 +38,7 @@ export const cocktailRouter = createTRPCRouter({
   .mutation(async ({ ctx, input }) => {
     const model = process.env.ANTHROPIC_MODEL_ID!;
 
-    const anthropicMessage = await anthropic.messages.create({
+    const LLMMessageStream = anthropic.messages.stream({
       model: model,
       max_tokens: 1024,
       temperature: 0,
@@ -68,44 +68,45 @@ export const cocktailRouter = createTRPCRouter({
         }
       ]
       });
-      interface CocktailData {
-        title: string;
-        description: string;
-        ingredients: string[];
-        instructions: string[];
-      }
 
-      console.log(anthropicMessage.content[0]);
+      // interface CocktailData {
+      //   title: string;
+      //   description: string;
+      //   ingredients: string[];
+      //   instructions: string[];
+      // }
 
-      const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
+      // console.log(anthropicMessage.content[0]);
+
+      // const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
       
-      const imagePrompt = `${cocktailData.title}: ${cocktailData.description}`;
-      const base64Image = await generateImage({ prompt: imagePrompt });
+      // // const imagePrompt = `${cocktailData.title}: ${cocktailData.description}`;
+      // // const base64Image = await generateImage({ prompt: imagePrompt });
 
-      if (!ctx.session?.user?.id) {
-        const newCocktail = await ctx.db.cocktail.create({
-          data: {
-            name: cocktailData.title,
-            description: cocktailData.description,
-            ingredients: cocktailData.ingredients,
-            instructions: cocktailData.instructions,
-            image: base64Image,
-          },
-        });
-        return newCocktail;
-      }
+      // if (!ctx.session?.user?.id) {
+      //   const newCocktail = await ctx.db.cocktail.create({
+      //     data: {
+      //       name: cocktailData.title,
+      //       description: cocktailData.description,
+      //       ingredients: cocktailData.ingredients,
+      //       instructions: cocktailData.instructions,
+      //       // image: base64Image,
+      //     },
+      //   });
+      //   return newCocktail;
+      // }
 
-      const newCocktail = await ctx.db.cocktail.create({
-        data: {
-          name: cocktailData.title,
-          description: cocktailData.description,
-          ingredients: cocktailData.ingredients,
-          instructions: cocktailData.instructions,
-          image: base64Image,
-          user: { connect: { id: ctx.session.user.id } },
-        },
-      });
-      return newCocktail;
+      // const newCocktail = await ctx.db.cocktail.create({
+      //   data: {
+      //     name: cocktailData.title,
+      //     description: cocktailData.description,
+      //     ingredients: cocktailData.ingredients,
+      //     instructions: cocktailData.instructions,
+      //     // image: base64Image,
+      //     user: { connect: { id: ctx.session.user.id } },
+      //   },
+      // });
+      return LLMMessageStream;
   }),
 });
 

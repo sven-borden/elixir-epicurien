@@ -1,5 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { cocktailRouter } from "./routers/cocktail";
+import { cocktailRouter } from "./routers/routerCocktails";
 
 /**
  * This is the primary router for your server.
