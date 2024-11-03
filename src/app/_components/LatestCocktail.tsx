@@ -11,13 +11,12 @@ export function LatestCocktail() {
   }
 
   return (
-    <Card className="w-full max-w-[48rem] flex-row">
+    <Card className="w-full max-w-[48rem] flex-row" placeholder={undefined}>
       {latestCocktail.image && (
       <CardHeader
-        shadow={false}
-        floated={false}
-        className="m-0 w-2/5 shrink-0 rounded-r-none"
-      >
+          shadow={false}
+          floated={false}
+          className="m-0 w-2/5 shrink-0 rounded-r-none" placeholder={undefined} >
         <img
           src={latestCocktail.image}
           alt="card-image"
@@ -25,23 +24,23 @@ export function LatestCocktail() {
         />
       </CardHeader>
       )}
-      <CardBody>
-        <Typography variant="h3" color="blue-gray" className="mb-2">
+      <CardBody placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Typography variant="h3" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           {latestCocktail.name}
         </Typography>
-        <Typography color="gray" className="mb-8 font-normal">
+        <Typography color="gray" className="mb-8 font-normal" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           {latestCocktail.description}
         </Typography>
-        <Typography variant="h4" color="blue-gray" className="mb-2">
+        <Typography variant="h4" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           Ingredients
         </Typography>
-        <List>
+        <List placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           {latestCocktail.ingredients.map((ingredient, index) => (
-            <ListItem key={index}>{ingredient}</ListItem>
+            <ListItem key={index} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>{ingredient}</ListItem>
           ))}
         </List>
         <a href="#" className="inline-block">
-          <Button variant="text" className="flex items-center gap-2">
+          <Button variant="text" className="flex items-center gap-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             Details
             <svg
               xmlns="http://www.w3.org/2000/svg"
