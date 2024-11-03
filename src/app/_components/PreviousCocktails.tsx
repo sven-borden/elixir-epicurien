@@ -58,13 +58,14 @@ const PreviousCocktails = () => {
               floated={false}
               shadow={false}
               color="transparent"
-              className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
+              className="absolute inset-0 m-0 h-full w-full rounded-none"
               placeholder={undefined}
             >
               <img
                 src={cocktail.image}
                 alt="card-image"
-                className="h-full w-full object-cover"/>
+                className="h-full w-full object-cover"
+              />
               <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
             </CardHeader>
           )}
