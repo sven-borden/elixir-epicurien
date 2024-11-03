@@ -1,6 +1,7 @@
 "use client";
 
 import { useCocktail } from '~/app/_contexts/CocktailContext';
+import { Card, CardHeader, CardBody, Typography, Button, List, ListItem} from '@material-tailwind/react';
 
 export function LatestCocktail() {
   const { latestCocktail } = useCocktail();
@@ -10,23 +11,57 @@ export function LatestCocktail() {
   }
 
   return (
-    <div className="flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row">
+    <Card className="w-full max-w-[48rem] flex-row">
       {latestCocktail.image && (
-      <img
-        className="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-        src={latestCocktail.image} 
-        alt={latestCocktail.name} />
+      <CardHeader
+        shadow={false}
+        floated={false}
+        className="m-0 w-2/5 shrink-0 rounded-r-none"
+      >
+        <img
+          src={latestCocktail.image}
+          alt="card-image"
+          className="h-full w-full object-cover"
+        />
+      </CardHeader>
       )}
-      <div className="flex flex-col justify-start p-6">
-        <h2
-          className="mb-2 text-xl font-medium text-neutral-800 dark:text-neutral-50">
+      <CardBody>
+        <Typography variant="h3" color="blue-gray" className="mb-2">
           {latestCocktail.name}
-        </h2>
-        <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+        </Typography>
+        <Typography color="gray" className="mb-8 font-normal">
           {latestCocktail.description}
-        </p>
-      </div>
-    </div>
+        </Typography>
+        <Typography variant="h4" color="blue-gray" className="mb-2">
+          Ingredients
+        </Typography>
+        <List>
+          {latestCocktail.ingredients.map((ingredient, index) => (
+            <ListItem key={index}>{ingredient}</ListItem>
+          ))}
+        </List>
+        <a href="#" className="inline-block">
+          <Button variant="text" className="flex items-center gap-2">
+            Details
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </Button>
+        </a>
+      </CardBody>
+    </Card>
+
     // <div className="max-w-128 p-4 rounded shadow bg-dark-purple text-white flex">
     //   {latestCocktail.image && (
     //     <div className="w-1/2 pr-4">
