@@ -25,22 +25,27 @@ export function GeneratedCocktail() {
       </CardHeader>
       )}
       <CardBody placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-        <Typography variant="h3" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Typography variant="h3" color="purple" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           {generatedCocktail.name}
         </Typography>
         <Typography color="gray" className="mb-8 font-normal" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           {generatedCocktail.description}
         </Typography>
-        <Typography variant="h4" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Typography variant="h4" color="deep-purple" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           Ingredients
         </Typography>
-        <List placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <ul className="list-disc list-inside mb-4 text-gray-900">
           {generatedCocktail.ingredients.map((ingredient, index) => (
-            <ListItem key={index} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>{ingredient}</ListItem>
+            <li key={index}>{ingredient}</li>
           ))}
-        </List>
+        </ul>
+        {/* <ol className="list-decimal list-inside mb-4 text-gray-300">
+           {generatedCocktail.instructions.map((instruction, index) => (
+             <li key={index}>{instruction}</li>
+           ))}
+        </ol> */}
         <a href="#" className="inline-block">
-          <Button variant="text" className="flex items-center gap-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+          <Button variant="gradient" size='md' color='deep-purple' className="flex items-center gap-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             Details
             <svg
               xmlns="http://www.w3.org/2000/svg"
