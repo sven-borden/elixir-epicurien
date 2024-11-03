@@ -1,9 +1,9 @@
 "use client";
-import { useState } from 'react';
-import { api } from '~/trpc/react';
-import { useGeneratedCocktail } from '~/app/_contexts/CocktailContext';
-import Button from '@material-tailwind/react/components/Button';
-import Input from '@material-tailwind/react/components/Input';
+import { useState } from "react";
+import { api } from "~/trpc/react";
+import { useGeneratedCocktail } from "~/app/_contexts/CocktailContext";
+import Button from "@material-tailwind/react/components/Button";
+import Input from "@material-tailwind/react/components/Input";
 
 export default function CocktailSearchTextInput() {
   const [promptValue, setPromptValue] = useState("");
@@ -20,7 +20,7 @@ export default function CocktailSearchTextInput() {
     },
     onError: () => {
       setLoading(false);
-    }
+    },
   });
 
   const handleSubmit = () => {
@@ -28,7 +28,7 @@ export default function CocktailSearchTextInput() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSubmit();
     }
   };
@@ -36,30 +36,32 @@ export default function CocktailSearchTextInput() {
   return (
     <div className="relative flex w-full max-w-[24rem]">
       <Input
-        type='text'
+        type="text"
         value={promptValue}
-        label='Prompt'
+        label="Prompt"
         onChange={(e) => setPromptValue(e.target.value)}
         className="pr-20"
         containerProps={{
           className: "min-w-0",
         }}
-        variant='outlined'
+        variant="outlined"
         onKeyDown={handleKeyDown}
         placeholder="Ask for a cocktail recipe..."
-        crossOrigin={undefined}/>
-        <Button 
+        crossOrigin={undefined}
+      />
+      <Button
         variant="gradient"
         loading={loading}
-        size='sm'
-        color='deep-purple'
+        size="sm"
+        color="deep-purple"
         className="!absolute right-1 top-1 rounded"
         onClick={handleSubmit}
         placeholder={undefined}
         onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}>
-          {loading ? 'Loading...' : 'Generate a cocktail'}
-        </Button>      
+        onPointerLeaveCapture={undefined}
+      >
+        {loading ? "Loading..." : "Generate a cocktail"}
+      </Button>
     </div>
   );
 }

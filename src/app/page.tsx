@@ -14,8 +14,6 @@ import PreviousCocktails from "./_components/PreviousCocktails";
 export default async function Home() {
   const session = await getServerAuthSession();
 
-  // void api.cocktail.getLatest.prefetch();
-
   return (
     <HydrateClient>
       <CocktailProvider>
