@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import { LatestCocktail } from "~/app/_components/LatestCocktail";
+import { GeneratedCocktail } from "~/app/_components/GeneratedCocktail";
 import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import CocktailSearchTextInput from "~/app/_components/CocktailSearchTextInput";
@@ -36,7 +36,7 @@ export default async function Home() {
               <CocktailSearchTextInput />
             </div>
             <div className="flex flex-col items-center gap-2 w-full">
-              <LatestCocktail />
+              <GeneratedCocktail />
             </div>
           </div>
           <Analytics />

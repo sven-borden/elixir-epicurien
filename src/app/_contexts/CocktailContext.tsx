@@ -14,26 +14,26 @@ interface Cocktail {
 }
 
 interface CocktailContextType {
-  latestCocktail: Cocktail | null;
-  setLatestCocktail: (cocktail: Cocktail) => void;
+  generatedCocktail: Cocktail | null;
+  setGeneratedCocktail: (cocktail: Cocktail) => void;
 }
 
 const CocktailContext = createContext<CocktailContextType | undefined>(undefined);
 
 export const CocktailProvider = ({ children }: { children: ReactNode }) => {
-  const [latestCocktail, setLatestCocktail] = useState<Cocktail | null>(null);
+  const [generatedCocktail, setGeneratedCocktail] = useState<Cocktail | null>(null);
 
   return (
-    <CocktailContext.Provider value={{ latestCocktail, setLatestCocktail }}>
+    <CocktailContext.Provider value={{ generatedCocktail, setGeneratedCocktail }}>
       {children}
     </CocktailContext.Provider>
   );
 };
 
-export const useCocktail = () => {
+export const useGeneratedCocktail = () => {
   const context = useContext(CocktailContext);
   if (!context) {
-    throw new Error('useCocktail must be used within a CocktailProvider');
+    throw new Error('useGeneratedCocktail must be used within a CocktailProvider');
   }
   return context;
 };

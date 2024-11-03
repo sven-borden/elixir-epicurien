@@ -1,24 +1,24 @@
 "use client";
 
-import { useCocktail } from '~/app/_contexts/CocktailContext';
+import { useGeneratedCocktail } from '~/app/_contexts/CocktailContext';
 import { Card, CardHeader, CardBody, Typography, Button, List, ListItem} from '@material-tailwind/react';
 
-export function LatestCocktail() {
-  const { latestCocktail } = useCocktail();
+export function GeneratedCocktail() {
+  const { generatedCocktail } = useGeneratedCocktail();
 
-  if (!latestCocktail) {
+  if (!generatedCocktail) {
     return null;
   }
 
   return (
     <Card className="w-full max-w-[48rem] flex-row" placeholder={undefined}>
-      {latestCocktail.image && (
+      {generatedCocktail.image && (
       <CardHeader
           shadow={false}
           floated={false}
           className="m-0 w-2/5 shrink-0 rounded-r-none" placeholder={undefined} >
         <img
-          src={latestCocktail.image}
+          src={generatedCocktail.image}
           alt="card-image"
           className="h-full w-full object-cover"
         />
@@ -26,16 +26,16 @@ export function LatestCocktail() {
       )}
       <CardBody placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
         <Typography variant="h3" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-          {latestCocktail.name}
+          {generatedCocktail.name}
         </Typography>
         <Typography color="gray" className="mb-8 font-normal" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-          {latestCocktail.description}
+          {generatedCocktail.description}
         </Typography>
         <Typography variant="h4" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           Ingredients
         </Typography>
         <List placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-          {latestCocktail.ingredients.map((ingredient, index) => (
+          {generatedCocktail.ingredients.map((ingredient, index) => (
             <ListItem key={index} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>{ingredient}</ListItem>
           ))}
         </List>
