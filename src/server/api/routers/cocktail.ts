@@ -2,7 +2,6 @@ import { z } from "zod";
 
 import {
   createTRPCRouter,
-  protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
 
@@ -10,7 +9,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 import { fakePicture } from "~/server/constants/fakePicture";
 
-const sharp = require("sharp");
+import sharp from "sharp";
 const anthropic = new Anthropic();
 const openai = new OpenAI();
 
@@ -100,9 +99,9 @@ export const cocktailRouter = createTRPCRouter({
 async function generateImage(arg0: { prompt: string; }) {
   const environment = process.env.NODE_ENV || 'development';
   console.log('Environment: ' + environment);
-  // if (environment === 'development') {
-  //   return fakePicture;
-  // }
+  if (environment === 'development') {
+    return fakePicture;
+  }
 
   const model = process.env.OPENAI_MODEL_ID!;
   console.log('Generate Image with prompt: ' + arg0.prompt);
