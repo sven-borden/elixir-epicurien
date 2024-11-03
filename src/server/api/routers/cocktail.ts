@@ -10,6 +10,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 import { fakePicture } from "~/server/constants/fakePicture";
 
+const sharp = require("sharp");
 const anthropic = new Anthropic();
 const openai = new OpenAI();
 
@@ -99,9 +100,9 @@ export const cocktailRouter = createTRPCRouter({
 async function generateImage(arg0: { prompt: string; }) {
   const environment = process.env.NODE_ENV || 'development';
   console.log('Environment: ' + environment);
-  if (environment === 'development') {
-    return fakePicture;
-  }
+  // if (environment === 'development') {
+  //   return fakePicture;
+  // }
 
   const model = process.env.OPENAI_MODEL_ID!;
   console.log('Generate Image with prompt: ' + arg0.prompt);
@@ -113,9 +114,24 @@ async function generateImage(arg0: { prompt: string; }) {
     style: "vivid",
     response_format: "b64_json",
   });
+  
+  // TODO: Extract to a helper function
+  const base64png = response.data[0]?.b64_json ? response.data[0].b64_json : '';
 
-  const image = response.data[0]?.b64_json ? 'data:image/png;base64,' + response.data[0].b64_json : '';
-  return image;
+  const base64Buffer = Buffer.from(base64png, 'base64');
+  const webpBuffer = await sharp(base64Buffer)
+    .webp({
+      quality: 75,
+      alphaQuality: 75,
+      lossless: false,
+      effort: 2,
+    })
+    .toBuffer();
+
+  const base64webp = 'data:image/webp;base64,' + webpBuffer.toString('base64');
+
+
+  return base64webp;
 }
 
 
