@@ -34,10 +34,11 @@ export default function CocktailSearchTextInput() {
   };
 
   return (
-    <div className="relative flex w-full max-w-[24rem]">
+    <div className="relative flex w-full max-w-[30rem]">
       <Input
         type="text"
         value={promptValue}
+        size="lg"
         label="Prompt"
         onChange={(e) => setPromptValue(e.target.value)}
         className="pr-20"
@@ -53,8 +54,8 @@ export default function CocktailSearchTextInput() {
         variant="gradient"
         loading={loading}
         size="sm"
-        color="deep-purple"
-        className="!absolute right-1 top-1 rounded"
+        color="purple"
+        className="!absolute right-1 top-1.5 rounded"
         onClick={handleSubmit}
         placeholder={undefined}
         onPointerEnterCapture={undefined}
