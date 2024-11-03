@@ -7,8 +7,6 @@ import {
   CardBody,
   Typography,
   Button,
-  List,
-  ListItem,
 } from "@material-tailwind/react";
 
 export function GeneratedCocktail() {
