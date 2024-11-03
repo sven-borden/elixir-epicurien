@@ -20,7 +20,7 @@ export const cocktailRouter = createTRPCRouter({
     if (!ctx.session?.user?.id) {
       const cocktails = await ctx.db.cocktail.findMany({
         orderBy: { createdAt: "desc" },
-        take: 2,
+        take: 4,
       });
 
       return cocktails ?? null;
@@ -29,7 +29,7 @@ export const cocktailRouter = createTRPCRouter({
     // Fetch the latest cocktail filtered by the current user session
     const cocktails = await ctx.db.cocktail.findMany({
       orderBy: { createdAt: "desc" },
-      take: 2,
+      take: 4,
       where: { user: { id: ctx.session.user.id } },
     });
 

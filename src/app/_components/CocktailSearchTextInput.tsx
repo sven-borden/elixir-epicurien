@@ -39,7 +39,7 @@ export default function CocktailSearchTextInput() {
         type="text"
         value={promptValue}
         size="lg"
-        label="Prompt"
+        label="Ask for a cocktail recipe..."
         onChange={(e) => setPromptValue(e.target.value)}
         className="pr-20"
         containerProps={{
