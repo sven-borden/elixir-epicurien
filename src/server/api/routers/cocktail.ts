@@ -15,23 +15,23 @@ const openai = new OpenAI();
 
 
 export const cocktailRouter = createTRPCRouter({
-  getLatest: publicProcedure.query(async ({ ctx }) => {
+  getLatestCocktails: publicProcedure.query(async ({ ctx }) => {
     // If there is no user session, fetch the latest cocktail without filtering by user
     if (!ctx.session?.user?.id) {
-      const cocktail = await ctx.db.cocktail.findFirst({
-      orderBy: { createdAt: "desc" },
+      const cocktails = await ctx.db.cocktail.findMany({
+        orderBy: { createdAt: "desc" },
       });
 
-      return cocktail ?? null;
+      return cocktails ?? null;
     }
 
     // Fetch the latest cocktail filtered by the current user session
-    const cocktail = await ctx.db.cocktail.findFirst({
+    const cocktails = await ctx.db.cocktail.findMany({
       orderBy: { createdAt: "desc" },
       where: { user: { id: ctx.session.user.id } },
     });
 
-    return cocktail ?? null;
+    return cocktails ?? null;
   }),
 
   generateNew: publicProcedure

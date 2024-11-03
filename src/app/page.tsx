@@ -8,12 +8,13 @@ import { api, HydrateClient } from "~/trpc/server";
 import { CocktailProvider } from "~/app/_contexts/CocktailContext";
 import { GeneratedCocktail } from "~/app/_components/GeneratedCocktail";
 import CocktailSearchTextInput from "~/app/_components/CocktailSearchTextInput";
+import PreviousCocktails from "./_components/PreviousCocktails";
 
 
 export default async function Home() {
   const session = await getServerAuthSession();
 
-  void api.cocktail.getLatest.prefetch();
+  // void api.cocktail.getLatest.prefetch();
 
   return (
     <HydrateClient>
@@ -39,6 +40,9 @@ export default async function Home() {
             </div>
             <div className="flex flex-col items-center gap-2 w-full">
               <GeneratedCocktail />
+            </div>
+            <div className="flex flex-col items-center gap-2 w-full">
+              <PreviousCocktails />
             </div>
           </div>
           <Analytics />
