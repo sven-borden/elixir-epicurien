@@ -11,6 +11,7 @@ import {
 import { Cocktail } from "../Interfaces/Cocktail";
 import Dialog, {
   DialogHeader,
+  DialogBody,
 } from "@material-tailwind/react/components/Dialog";
 
 const PreviousCocktails = () => {
@@ -44,7 +45,7 @@ const PreviousCocktails = () => {
   }
 
   return (
-    <div className="grid w-full max-w-[72rem] grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid w-full max-w-[72rem] grid-cols-1 gap-4 md:grid-cols-2">
       {cocktails.map((cocktail) => (
         <Card
           key={cocktail.id}
@@ -74,13 +75,13 @@ const PreviousCocktails = () => {
           >
             <Typography
               variant="h3"
-              className="text-appTheme-background mb-2"
+              className="mb-2 text-appTheme-background"
               placeholder={undefined}
             >
               {cocktail.name}
             </Typography>
             <Typography
-              className="text-appTheme-background mb-4"
+              className="mb-4 text-appTheme-background"
               placeholder={undefined}
             >
               {cocktail.description}
@@ -93,71 +94,97 @@ const PreviousCocktails = () => {
         size="xl"
         handler={() => setCardOpen(false)}
         placeholder={undefined}
+        className="rounded-3xl bg-gradient-to-b from-gray-200 to-purple-50 text-gray-900"
       >
         <DialogHeader className="justify-between" placeholder={undefined}>
           {selectedCocktail && (
-            <Card
-              className="w-full max-w-[48rem] flex-row"
-              placeholder={undefined}
-            >
-              {selectedCocktail.image && (
-                <CardHeader
-                  shadow={false}
-                  floated={false}
-                  className="m-0 w-2/5 shrink-0 rounded-r-none"
+            <div className="flex w-full flex-col">
+              {/* Cocktail header */}
+              <div className="flex flex-row">
+                <div className="w-1/2 p-4">
+                  <Typography
+                    variant="h3"
+                    color="purple"
+                    className="mb-2"
+                    placeholder={undefined}
+                  >
+                    {selectedCocktail.name}
+                  </Typography>
+                  <Typography
+                    color="gray"
+                    variant="paragraph"
+                    className="mb-8"
+                    placeholder={undefined}
+                  >
+                    {selectedCocktail.description}
+                  </Typography>
+                </div>
+                {selectedCocktail.image && (
+                  <div className="w-1/2">
+                    <img
+                      src={selectedCocktail.image}
+                      alt="cocktail-image"
+                      className="h-full w-full rounded-xl object-cover shadow-xl"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Ingredient card */}
+              <div className="p-4">
+                <Card
+                  className="mb-4 w-full max-w-[48rem] flex-row shadow-lg"
                   placeholder={undefined}
                 >
-                  <img
-                    src={selectedCocktail.image}
-                    alt="card-image"
-                    className="h-full w-full object-cover"
-                  />
-                </CardHeader>
-              )}
-              <CardBody placeholder={undefined}>
-                <Typography
-                  variant="h3"
-                  color="purple"
-                  className="mb-2"
+                  <CardBody placeholder={undefined}>
+                    <Typography
+                      variant="h4"
+                      color="deep-purple"
+                      className="mb-2"
+                      placeholder={undefined}
+                    >
+                      Ingredients
+                    </Typography>
+                    <ul className="mb-4 list-inside list-disc text-gray-900">
+                      {selectedCocktail.ingredients.map((ingredient, index) => (
+                        <Typography variant="paragraph" placeholder={undefined}>
+                          <li key={index}>{ingredient}</li>
+                        </Typography>
+                      ))}
+                    </ul>
+                  </CardBody>
+                </Card>
+
+                {/* Recipe card */}
+                <Card
+                  className="mb-4 w-full max-w-[48rem] flex-row shadow-lg"
                   placeholder={undefined}
                 >
-                  {selectedCocktail.name}
-                </Typography>
-                <Typography
-                  color="gray"
-                  className="mb-8 font-normal"
-                  placeholder={undefined}
-                >
-                  {selectedCocktail.description}
-                </Typography>
-                <Typography
-                  variant="h4"
-                  color="deep-purple"
-                  className="mb-2"
-                  placeholder={undefined}
-                >
-                  Ingredients
-                </Typography>
-                <ul className="mb-4 list-inside list-disc text-gray-900">
-                  {selectedCocktail.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))}
-                </ul>
-                <Typography
-                  variant="h4"
-                  color="deep-purple"
-                  className="mb-2"
-                  placeholder={undefined}
-                >
-                  Recipe
-                </Typography>
-                <ol className="mb-4 list-inside list-decimal text-gray-900">
-                  {selectedCocktail.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                  ))}
-                </ol>
-              </CardBody>
-            </Card>
+                  <CardBody placeholder={undefined}>
+                    <Typography
+                      variant="h4"
+                      color="deep-purple"
+                      className="mb-2"
+                      placeholder={undefined}
+                    >
+                      Recipe
+                    </Typography>
+                    <ol className="mb-4 list-inside list-decimal text-gray-900">
+                      {selectedCocktail.instructions.map(
+                        (instruction, index) => (
+                          <Typography
+                            variant="paragraph"
+                            placeholder={undefined}
+                          >
+                            <li key={index}>{instruction}</li>
+                          </Typography>
+                        ),
+                      )}
+                    </ol>
+                  </CardBody>
+                </Card>
+              </div>
+            </div>
           )}
         </DialogHeader>
       </Dialog>

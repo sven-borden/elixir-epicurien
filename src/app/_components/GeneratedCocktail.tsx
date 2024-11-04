@@ -43,7 +43,8 @@ export function GeneratedCocktail() {
         </Typography>
         <Typography
           color="gray"
-          className="mb-8 font-normal"
+          className="mb-8"
+          variant="paragraph"
           placeholder={undefined}
         >
           {generatedCocktail.description}
