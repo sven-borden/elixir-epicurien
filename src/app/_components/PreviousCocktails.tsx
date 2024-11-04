@@ -44,7 +44,7 @@ const PreviousCocktails = () => {
   }
 
   return (
-    <div className="grid w-full max-w-[72rem] grid-cols-2 gap-4">
+    <div className="grid w-full max-w-[72rem] grid-cols-1 md:grid-cols-2 gap-4">
       {cocktails.map((cocktail) => (
         <Card
           key={cocktail.id}
