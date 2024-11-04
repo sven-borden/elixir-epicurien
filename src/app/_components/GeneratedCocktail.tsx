@@ -32,7 +32,7 @@ export function GeneratedCocktail() {
   return (
     <div className="w-full max-w-[48rem]">
       <Card className="w-full max-w-[48rem] flex-row" placeholder={undefined}>
-        {!loadingImage ? (
+        {loadingImage ? (
           <AnimatedWaves />
         ) : (
           generatedCocktail.image && (
