@@ -12,8 +12,8 @@ import {
 import { Cocktail } from "../Interfaces/Cocktail";
 import Dialog, {
   DialogHeader,
-  DialogBody,
 } from "@material-tailwind/react/components/Dialog";
+import CocktailDetails from "./CocktailDetails";
 
 const PreviousCocktails = () => {
   // Manage cocktails state
@@ -90,97 +90,13 @@ const PreviousCocktails = () => {
           </CardBody>
         </Card>
       ))}
-      <Dialog
-        open={cardOpen}
-        size="md"
-        handler={() => setCardOpen(false)}
-        placeholder={undefined}
-        className="rounded-3xl bg-gradient-to-b from-gray-200 to-purple-50 text-gray-900"
-      >
-        <DialogHeader
-          className="m-0 justify-between p-0"
-          placeholder={undefined}
-        >
-          {selectedCocktail && (
-            <Carousel placeholder={undefined}>
-              {/* Cocktail header */}
-              <Card
-                className="w-full flex-row shadow-lg"
-                placeholder={undefined}
-              >
-                {selectedCocktail.image && (
-                  <CardHeader
-                    placeholder={undefined}
-                    className="m-0 w-2/5 shrink-0 rounded-r-none"
-                  >
-                    <img
-                      src={selectedCocktail.image}
-                      alt="card-image"
-                      className="h-full w-full object-cover"
-                    />
-                  </CardHeader>
-                )}
-                <CardBody placeholder={undefined}>
-                  <Typography
-                    variant="h3"
-                    color="purple"
-                    className="mb-2"
-                    placeholder={undefined}
-                  >
-                    {selectedCocktail.name}
-                  </Typography>
-                  <Typography
-                    color="gray"
-                    className="mb-8"
-                    variant="paragraph"
-                    placeholder={undefined}
-                  >
-                    {selectedCocktail.description}
-                  </Typography>
-                </CardBody>
-              </Card>
-
-              {/* Ingredient card */}
-              <div className="ml-16 mt-8 items-center">
-                <Typography
-                  variant="h4"
-                  color="deep-purple"
-                  className="mb-2"
-                  placeholder={undefined}
-                >
-                  Ingredients
-                </Typography>
-                <ul className="list-inside list-disc text-gray-900">
-                  <Typography variant="paragraph" placeholder={undefined}>
-                    {selectedCocktail.ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
-                    ))}
-                  </Typography>
-                </ul>
-              </div>
-
-              {/* Recipe card */}
-              <div className="ml-16 mt-8 items-center">
-                <Typography
-                  variant="h4"
-                  color="deep-purple"
-                  className="mb-2"
-                  placeholder={undefined}
-                >
-                  Recipe
-                </Typography>
-                <ol className="list-inside list-decimal text-gray-900">
-                  <Typography variant="paragraph" placeholder={undefined}>
-                    {selectedCocktail.instructions.map((instruction, index) => (
-                      <li key={index}>{instruction}</li>
-                    ))}
-                  </Typography>
-                </ol>
-              </div>
-            </Carousel>
-          )}
-        </DialogHeader>
-      </Dialog>
+      {selectedCocktail && (
+        <CocktailDetails
+          cocktail={selectedCocktail}
+          onClose={() => setCardOpen(false)}
+          open={cardOpen}
+        />
+      )}
     </div>
   );
 };
