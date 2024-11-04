@@ -2,11 +2,11 @@ import React from "react";
 
 const AnimatedWaves: React.FC = () => {
   return (
-    <div className="relative h-[690px] w-full overflow-hidden">
+    <div className="h-full w-full rotate-180 overflow-hidden">
       <svg
         width="100%"
         height="100%"
-        viewBox="0 0 1440 690"
+        viewBox="0 0 500 690"
         xmlns="http://www.w3.org/2000/svg"
         className="transition delay-150 duration-300 ease-in-out"
       >
