@@ -141,54 +141,42 @@ const PreviousCocktails = () => {
               </Card>
 
               {/* Ingredient card */}
-              <Card
-                className="w-full flex-row shadow-lg"
-                placeholder={undefined}
-              >
-                <CardBody placeholder={undefined}>
-                  <Typography
-                    variant="h4"
-                    color="deep-purple"
-                    className="mb-2"
-                    placeholder={undefined}
-                  >
-                    Ingredients
+              <div className="ml-16 mt-8 items-center">
+                <Typography
+                  variant="h4"
+                  color="deep-purple"
+                  className="mb-2"
+                  placeholder={undefined}
+                >
+                  Ingredients
+                </Typography>
+                <ul className="list-inside list-disc text-gray-900">
+                  <Typography variant="paragraph" placeholder={undefined}>
+                    {selectedCocktail.ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
                   </Typography>
-                  <ul className="list-inside list-disc text-gray-900">
-                    <Typography variant="paragraph" placeholder={undefined}>
-                      {selectedCocktail.ingredients.map((ingredient, index) => (
-                        <li key={index}>{ingredient}</li>
-                      ))}
-                    </Typography>
-                  </ul>
-                </CardBody>
-              </Card>
+                </ul>
+              </div>
 
               {/* Recipe card */}
-              <Card
-                className="w-full flex-row shadow-lg"
-                placeholder={undefined}
-              >
-                <CardBody placeholder={undefined}>
-                  <Typography
-                    variant="h4"
-                    color="deep-purple"
-                    className="mb-2"
-                    placeholder={undefined}
-                  >
-                    Recipe
+              <div className="ml-16 mt-8 items-center">
+                <Typography
+                  variant="h4"
+                  color="deep-purple"
+                  className="mb-2"
+                  placeholder={undefined}
+                >
+                  Recipe
+                </Typography>
+                <ol className="list-inside list-decimal text-gray-900">
+                  <Typography variant="paragraph" placeholder={undefined}>
+                    {selectedCocktail.instructions.map((instruction, index) => (
+                      <li key={index}>{instruction}</li>
+                    ))}
                   </Typography>
-                  <ol className="list-inside list-decimal text-gray-900">
-                    <Typography variant="paragraph" placeholder={undefined}>
-                      {selectedCocktail.instructions.map(
-                        (instruction, index) => (
-                          <li key={index}>{instruction}</li>
-                        ),
-                      )}
-                    </Typography>
-                  </ol>
-                </CardBody>
-              </Card>
+                </ol>
+              </div>
             </Carousel>
           )}
         </DialogHeader>
