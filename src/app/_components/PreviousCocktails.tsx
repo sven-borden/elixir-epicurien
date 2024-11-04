@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardBody,
   Typography,
+  Carousel,
 } from "@material-tailwind/react";
 import { Cocktail } from "../Interfaces/Cocktail";
 import Dialog, {
@@ -96,12 +97,15 @@ const PreviousCocktails = () => {
         placeholder={undefined}
         className="rounded-3xl bg-gradient-to-b from-gray-200 to-purple-50 text-gray-900"
       >
-        <DialogHeader className="justify-between" placeholder={undefined}>
+        <DialogHeader
+          className="m-0 justify-between p-0"
+          placeholder={undefined}
+        >
           {selectedCocktail && (
-            <div className="flex w-full flex-col items-center">
+            <Carousel placeholder={undefined}>
               {/* Cocktail header */}
               <Card
-                className="mb-4 w-full max-w-[36rem] flex-row shadow-lg"
+                className="w-full flex-row shadow-lg"
                 placeholder={undefined}
               >
                 {selectedCocktail.image && (
@@ -138,7 +142,7 @@ const PreviousCocktails = () => {
 
               {/* Ingredient card */}
               <Card
-                className="mb-4 w-full max-w-[36rem] flex-row shadow-lg"
+                className="w-full flex-row shadow-lg"
                 placeholder={undefined}
               >
                 <CardBody placeholder={undefined}>
@@ -150,7 +154,7 @@ const PreviousCocktails = () => {
                   >
                     Ingredients
                   </Typography>
-                  <ul className="mb-4 list-inside list-disc text-gray-900">
+                  <ul className="list-inside list-disc text-gray-900">
                     {selectedCocktail.ingredients.map((ingredient, index) => (
                       <Typography variant="paragraph" placeholder={undefined}>
                         <li key={index}>{ingredient}</li>
@@ -162,7 +166,7 @@ const PreviousCocktails = () => {
 
               {/* Recipe card */}
               <Card
-                className="mb-4 w-full max-w-[36rem] flex-row shadow-lg"
+                className="w-full flex-row shadow-lg"
                 placeholder={undefined}
               >
                 <CardBody placeholder={undefined}>
@@ -174,7 +178,7 @@ const PreviousCocktails = () => {
                   >
                     Recipe
                   </Typography>
-                  <ol className="mb-4 list-inside list-decimal text-gray-900">
+                  <ol className="list-inside list-decimal text-gray-900">
                     {selectedCocktail.instructions.map((instruction, index) => (
                       <Typography variant="paragraph" placeholder={undefined}>
                         <li key={index}>{instruction}</li>
@@ -183,7 +187,7 @@ const PreviousCocktails = () => {
                   </ol>
                 </CardBody>
               </Card>
-            </div>
+            </Carousel>
           )}
         </DialogHeader>
       </Dialog>
