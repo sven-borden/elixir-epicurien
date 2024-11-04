@@ -6,6 +6,8 @@ interface CocktailContextType {
   setGeneratedCocktail: (
     cocktail: Cocktail | ((prev: Cocktail | null) => Cocktail),
   ) => void;
+  loadingImage: boolean;
+  setLoadingImage: (loading: boolean) => void;
 }
 
 const CocktailContext = createContext<CocktailContextType | undefined>(
@@ -16,10 +18,16 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const [generatedCocktail, setGeneratedCocktail] = useState<Cocktail | null>(
     null,
   );
+  const [loadingImage, setLoadingImage] = useState(false);
 
   return (
     <CocktailContext.Provider
-      value={{ generatedCocktail, setGeneratedCocktail }}
+      value={{
+        generatedCocktail,
+        setGeneratedCocktail,
+        loadingImage,
+        setLoadingImage,
+      }}
     >
       {children}
     </CocktailContext.Provider>

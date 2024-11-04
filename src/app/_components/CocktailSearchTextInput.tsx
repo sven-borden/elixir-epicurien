@@ -9,8 +9,7 @@ import { Cocktail } from "@prisma/client";
 export default function CocktailSearchTextInput() {
   const [promptValue, setPromptValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [loadingImage, setLoadingImage] = useState(false);
-  const { setGeneratedCocktail } = useGeneratedCocktail();
+  const { setGeneratedCocktail, setLoadingImage } = useGeneratedCocktail();
 
   const createCocktail = api.cocktail.generateCocktail.useMutation({
     onMutate: () => {

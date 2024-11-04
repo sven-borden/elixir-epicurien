@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { getServerAuthSession } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
 
 import { CocktailProvider } from "~/app/_contexts/CocktailContext";
 import { GeneratedCocktail } from "~/app/_components/GeneratedCocktail";
@@ -25,7 +25,7 @@ export default async function Home() {
             </div>
             <Link
               href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full px-10 py-3 font-semibold no-underline transition bg-appTheme-primary text-appTheme-background hover:bg-appTheme-secondary"
+              className="rounded-full bg-appTheme-primary px-10 py-3 font-semibold text-appTheme-background no-underline transition hover:bg-appTheme-secondary"
             >
               {session ? "Sign out" : "Sign in"}
             </Link>

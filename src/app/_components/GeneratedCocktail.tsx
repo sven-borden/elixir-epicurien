@@ -10,10 +10,10 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import CocktailDetails from "./CocktailDetails";
-import { Cocktail } from "../Interfaces/Cocktail";
+import AnimatedWaves from "./AnimatedWaves";
 
 export function GeneratedCocktail() {
-  const { generatedCocktail } = useGeneratedCocktail();
+  const { generatedCocktail, loadingImage } = useGeneratedCocktail();
 
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
@@ -32,19 +32,23 @@ export function GeneratedCocktail() {
   return (
     <div className="w-full max-w-[48rem]">
       <Card className="w-full max-w-[48rem] flex-row" placeholder={undefined}>
-        {generatedCocktail.image && (
-          <CardHeader
-            shadow={false}
-            floated={false}
-            className="m-0 w-2/5 shrink-0 rounded-r-none"
-            placeholder={undefined}
-          >
-            <img
-              src={generatedCocktail.image}
-              alt="card-image"
-              className="h-full w-full object-cover"
-            />
-          </CardHeader>
+        {!loadingImage ? (
+          <AnimatedWaves />
+        ) : (
+          generatedCocktail.image && (
+            <CardHeader
+              shadow={false}
+              floated={false}
+              className="m-0 w-2/5 shrink-0 rounded-r-none"
+              placeholder={undefined}
+            >
+              <img
+                src={generatedCocktail.image}
+                alt="card-image"
+                className="h-full w-full object-cover"
+              />
+            </CardHeader>
+          )
         )}
         <CardBody placeholder={undefined}>
           <Typography

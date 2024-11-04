@@ -7,12 +7,8 @@ import {
   CardHeader,
   CardBody,
   Typography,
-  Carousel,
 } from "@material-tailwind/react";
 import { Cocktail } from "../Interfaces/Cocktail";
-import Dialog, {
-  DialogHeader,
-} from "@material-tailwind/react/components/Dialog";
 import CocktailDetails from "./CocktailDetails";
 
 const PreviousCocktails = () => {
