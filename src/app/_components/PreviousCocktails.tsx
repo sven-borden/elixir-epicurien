@@ -155,11 +155,11 @@ const PreviousCocktails = () => {
                     Ingredients
                   </Typography>
                   <ul className="list-inside list-disc text-gray-900">
-                    {selectedCocktail.ingredients.map((ingredient, index) => (
-                      <Typography variant="paragraph" placeholder={undefined}>
+                    <Typography variant="paragraph" placeholder={undefined}>
+                      {selectedCocktail.ingredients.map((ingredient, index) => (
                         <li key={index}>{ingredient}</li>
-                      </Typography>
-                    ))}
+                      ))}
+                    </Typography>
                   </ul>
                 </CardBody>
               </Card>
@@ -179,11 +179,13 @@ const PreviousCocktails = () => {
                     Recipe
                   </Typography>
                   <ol className="list-inside list-decimal text-gray-900">
-                    {selectedCocktail.instructions.map((instruction, index) => (
-                      <Typography variant="paragraph" placeholder={undefined}>
-                        <li key={index}>{instruction}</li>
-                      </Typography>
-                    ))}
+                    <Typography variant="paragraph" placeholder={undefined}>
+                      {selectedCocktail.instructions.map(
+                        (instruction, index) => (
+                          <li key={index}>{instruction}</li>
+                        ),
+                      )}
+                    </Typography>
                   </ol>
                 </CardBody>
               </Card>
