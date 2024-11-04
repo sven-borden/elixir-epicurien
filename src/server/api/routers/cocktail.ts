@@ -36,7 +36,7 @@ export const cocktailRouter = createTRPCRouter({
     return cocktails ?? null;
   }),
 
-  generateNew: publicProcedure
+  generateCocktail: publicProcedure
   .input(z.object({ query: z.string().min(1) }))
   .mutation(async ({ ctx, input }) => {
     interface CocktailData {
@@ -50,8 +50,6 @@ export const cocktailRouter = createTRPCRouter({
 
     const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
     
-    const imagePrompt = `${cocktailData.title}: ${cocktailData.description}`;
-    const base64Image = await generateImage({ prompt: imagePrompt });
 
     if (!ctx.session?.user?.id) {
       const newCocktail = await ctx.db.cocktail.create({
@@ -60,7 +58,6 @@ export const cocktailRouter = createTRPCRouter({
           description: cocktailData.description,
           ingredients: cocktailData.ingredients,
           instructions: cocktailData.instructions,
-          image: base64Image,
         },
       });
       return newCocktail;
@@ -72,13 +69,39 @@ export const cocktailRouter = createTRPCRouter({
         description: cocktailData.description,
         ingredients: cocktailData.ingredients,
         instructions: cocktailData.instructions,
-        image: base64Image,
         user: { connect: { id: ctx.session.user.id } },
       },
     });
     return newCocktail;
   }),
+
+  
+// Generate an image based on the description from a cocktail ID
+  generateImage: publicProcedure
+  .input(z.object({ id: z.string().min(1) }))
+  .mutation(async ({ ctx, input }) => {
+    const cocktail = await ctx.db.cocktail.findUnique({
+      where: { id: input.id },
+    });
+
+    if (!cocktail) {
+      return null;
+    }
+
+    const imagePrompt = `${cocktail.name}: ${cocktail.description}`;
+    const base64Image = await generateImage({ prompt: imagePrompt });
+
+    // Update the cocktail with the generated image
+    await ctx.db.cocktail.update({
+      where: { id: input.id },
+      data: { image: base64Image },
+    });
+
+    return base64Image;
+  }),
 });
+
+
 
 
 /**

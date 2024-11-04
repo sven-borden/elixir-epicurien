@@ -4,22 +4,43 @@ import { api } from "~/trpc/react";
 import { useGeneratedCocktail } from "~/app/_contexts/CocktailContext";
 import Button from "@material-tailwind/react/components/Button";
 import Input from "@material-tailwind/react/components/Input";
+import { Cocktail } from "@prisma/client";
 
 export default function CocktailSearchTextInput() {
   const [promptValue, setPromptValue] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
   const { setGeneratedCocktail } = useGeneratedCocktail();
 
-  const createCocktail = api.cocktail.generateNew.useMutation({
+  const createCocktail = api.cocktail.generateCocktail.useMutation({
     onMutate: () => {
       setLoading(true);
     },
-    onSuccess: (data) => {
+    onSuccess: (cocktailData) => {
       setLoading(false);
-      setGeneratedCocktail(data);
+      setGeneratedCocktail(cocktailData);
+      generateImage.mutate({ id: cocktailData.id });
     },
     onError: () => {
       setLoading(false);
+    },
+  });
+
+  const generateImage = api.cocktail.generateImage.useMutation({
+    onMutate: () => {
+      setLoadingImage(true);
+    },
+    onSuccess: (imageData) => {
+      setLoadingImage(false);
+      setGeneratedCocktail((prev: Cocktail | null) => {
+        return {
+          ...prev,
+          image: imageData,
+        } as Cocktail;
+      });
+    },
+    onError: () => {
+      setLoadingImage(false);
     },
   });
 

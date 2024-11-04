@@ -106,7 +106,7 @@ export function GeneratedCocktail() {
       </Card>
       {generatedCocktail && (
         <CocktailDetails
-          cocktail={generatedCocktail as Cocktail}
+          cocktail={generatedCocktail}
           onClose={handleCloseDialog}
           open={isDetailOpen}
         />

@@ -1,21 +1,11 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-
-interface Cocktail {
-  id: string;
-  name: string;
-  description?: string | null;
-  ingredients: string[];
-  instructions: string[];
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  userId: string | null;
-}
-
+import { Cocktail } from "../Interfaces/Cocktail";
 interface CocktailContextType {
   generatedCocktail: Cocktail | null;
-  setGeneratedCocktail: (cocktail: Cocktail) => void;
+  setGeneratedCocktail: (
+    cocktail: Cocktail | ((prev: Cocktail | null) => Cocktail),
+  ) => void;
 }
 
 const CocktailContext = createContext<CocktailContextType | undefined>(
