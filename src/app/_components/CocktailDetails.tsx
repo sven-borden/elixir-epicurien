@@ -37,7 +37,7 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
               {cocktail.image && (
                 <CardHeader
                   placeholder={undefined}
-                  className="m-0 w-2/5 shrink-0 rounded-r-none"
+                  className="m-0 w-full md:w-2/5 shrink-0 rounded-r-none"
                 >
                   <img
                     src={cocktail.image}
