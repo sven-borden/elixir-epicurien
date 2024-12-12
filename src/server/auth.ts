@@ -1,5 +1,4 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { clientCallTypeToProcedureType } from "@trpc/client";
 import {
   getServerSession,
   type DefaultSession,
@@ -8,7 +7,6 @@ import {
 import { type Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import InstagramProvider from "next-auth/providers/instagram";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
@@ -58,10 +56,6 @@ export const authOptions: NextAuthOptions = {
     FacebookProvider({
       clientId: env.META_CLIENT_ID,
       clientSecret: env.META_CLIENT_SECRET,
-    }),
-    InstagramProvider({
-      clientId: process.env.META_CLIENT_ID,
-      clientSecret: process.env.META_CLIENT_SECRET
     }),
     /**
      * ...add more providers here.
