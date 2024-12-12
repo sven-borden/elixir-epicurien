@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <HydrateClient>
       <CocktailProvider>
-        <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-gray-200 to-purple-100 text-gray-900">
+        <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-black via-gray-900 to-purple-900 text-gray-900">
           <nav className="absolute left-0 top-0 flex w-full items-center justify-between p-4">
             <div className="flex items-center">
               {session && (
@@ -32,11 +32,14 @@ export default async function Home() {
           </nav>
           <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
             <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-              Elixir <span className="text-appTheme-primary">Epicurien</span>
+              <span className="text-gray-100">Elixir</span>
+              <span className="text-appTheme-primary">Epicurien</span>
             </h1>
-            <div className="flex w-full flex-col items-center gap-2">
-              <CocktailSearchTextInput />
-            </div>
+            {session && (
+              <div className="flex w-full flex-col items-center gap-2">
+                <CocktailSearchTextInput />
+              </div>
+            )}
             <div className="flex w-full flex-col items-center gap-2">
               <GeneratedCocktail />
             </div>

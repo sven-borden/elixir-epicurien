@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import {
   createTRPCRouter,
+  protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
 
@@ -36,7 +37,7 @@ export const cocktailRouter = createTRPCRouter({
     return cocktails ?? null;
   }),
 
-  generateCocktail: publicProcedure
+  generateCocktail: protectedProcedure
   .input(z.object({ query: z.string().min(1) }))
   .mutation(async ({ ctx, input }) => {
     interface CocktailData {
@@ -77,7 +78,7 @@ export const cocktailRouter = createTRPCRouter({
 
   
 // Generate an image based on the description from a cocktail ID
-  generateImage: publicProcedure
+  generateImage: protectedProcedure
   .input(z.object({ id: z.string().min(1) }))
   .mutation(async ({ ctx, input }) => {
     const cocktail = await ctx.db.cocktail.findUnique({

@@ -42,57 +42,59 @@ const PreviousCocktails = () => {
   }
 
   return (
-    <div className="grid w-full max-w-[72rem] grid-cols-1 gap-4 md:grid-cols-2">
-      {cocktails.map((cocktail) => (
-        <Card
-          key={cocktail.id}
-          className="relative grid w-full max-w-[48rem] cursor-pointer flex-row items-end overflow-hidden transition-opacity hover:opacity-90"
-          onClick={() => handleCardClick(cocktail)}
-          placeholder={undefined}
-        >
-          {cocktail.image && (
-            <CardHeader
-              floated={false}
-              shadow={false}
-              color="transparent"
-              className="absolute inset-0 m-0 h-full w-full rounded-none"
-              placeholder={undefined}
-            >
-              <img
-                src={cocktail.image}
-                alt="card-image"
-                className="h-full w-full object-cover"
-              />
-              <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
-            </CardHeader>
-          )}
-          <CardBody
-            className="relative px-6 py-14 md:px-12"
+    <div className="w-full">
+      <div className="grid w-full max-w-[72rem] grid-cols-1 gap-4 md:grid-cols-2">
+        {cocktails.map((cocktail) => (
+          <Card
+            key={cocktail.id}
+            className="relative grid w-full max-w-[48rem] cursor-pointer flex-row items-end overflow-hidden transition-opacity hover:opacity-90"
+            onClick={() => handleCardClick(cocktail)}
             placeholder={undefined}
           >
-            <Typography
-              variant="h3"
-              className="mb-2 text-appTheme-background"
+            {cocktail.image && (
+              <CardHeader
+                floated={false}
+                shadow={false}
+                color="transparent"
+                className="absolute inset-0 m-0 h-full w-full rounded-none"
+                placeholder={undefined}
+              >
+                <img
+                  src={cocktail.image}
+                  alt="card-image"
+                  className="h-full w-full object-cover"
+                />
+                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
+              </CardHeader>
+            )}
+            <CardBody
+              className="relative px-6 py-14 md:px-12"
               placeholder={undefined}
             >
-              {cocktail.name}
-            </Typography>
-            <Typography
-              className="mb-4 text-appTheme-background"
-              placeholder={undefined}
-            >
-              {cocktail.description}
-            </Typography>
-          </CardBody>
-        </Card>
-      ))}
-      {selectedCocktail && (
-        <CocktailDetails
-          cocktail={selectedCocktail}
-          onClose={() => setCardOpen(false)}
-          open={cardOpen}
-        />
-      )}
+              <Typography
+                variant="h3"
+                className="mb-2 text-appTheme-background"
+                placeholder={undefined}
+              >
+                {cocktail.name}
+              </Typography>
+              <Typography
+                className="mb-4 text-appTheme-background"
+                placeholder={undefined}
+              >
+                {cocktail.description}
+              </Typography>
+            </CardBody>
+          </Card>
+        ))}
+        {selectedCocktail && (
+          <CocktailDetails
+            cocktail={selectedCocktail}
+            onClose={() => setCardOpen(false)}
+            open={cardOpen}
+          />
+        )}
+      </div>
     </div>
   );
 };

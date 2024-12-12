@@ -62,6 +62,7 @@ export default function CocktailSearchTextInput() {
         label="Ask for a cocktail recipe..."
         onChange={(e) => setPromptValue(e.target.value)}
         className="pr-20"
+        color="white"
         containerProps={{
           className: "min-w-0",
         }}
