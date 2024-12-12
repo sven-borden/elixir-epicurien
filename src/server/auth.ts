@@ -56,12 +56,12 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     FacebookProvider({
-      clientId: env.FACEBOOK_CLIENT_ID,
-      clientSecret: env.FACEBOOK_CLIENT_SECRET,
+      clientId: env.META_CLIENT_ID,
+      clientSecret: env.META_CLIENT_SECRET,
     }),
     InstagramProvider({
-      clientId: process.env.INSTAGRAM_CLIENT_ID,
-      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET
+      clientId: process.env.META_CLIENT_ID,
+      clientSecret: process.env.META_CLIENT_SECRET
     }),
     /**
      * ...add more providers here.
