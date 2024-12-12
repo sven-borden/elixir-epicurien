@@ -51,6 +51,13 @@ export const cocktailRouter = createTRPCRouter({
 
     const cocktailData: CocktailData = JSON.parse((anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}") as CocktailData;
     
+    const existingCocktail = await ctx.db.cocktail.findFirst({
+      where: { name: cocktailData.title },
+    });
+
+    if (existingCocktail) {
+      return existingCocktail;
+    }
 
     if (!ctx.session?.user?.id) {
       const newCocktail = await ctx.db.cocktail.create({

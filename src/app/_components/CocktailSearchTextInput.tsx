@@ -18,7 +18,10 @@ export default function CocktailSearchTextInput() {
     onSuccess: (cocktailData) => {
       setLoading(false);
       setGeneratedCocktail(cocktailData);
-      generateImage.mutate({ id: cocktailData.id });
+
+      if (!cocktailData.image) {
+        generateImage.mutate({ id: cocktailData.id });
+      }
     },
     onError: () => {
       setLoading(false);
