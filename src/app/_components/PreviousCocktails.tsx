@@ -38,7 +38,10 @@ const PreviousCocktails = () => {
     if (data && data.pages.length > 0) {
       const flattenedCocktails = data.pages.flatMap(page => page.items);
       setCocktails(flattenedCocktails);
-      setHasMore(data.pages[data.pages.length - 1].nextCursor !== undefined);
+      
+      // Use optional chaining to safely access the nextCursor property
+      const lastPage = data.pages[data.pages.length - 1];
+      setHasMore(lastPage?.nextCursor !== undefined);
     }
   }, [data]);
 
