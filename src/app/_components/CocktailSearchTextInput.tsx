@@ -1,6 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import type { ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { api } from "~/trpc/react";
 import { useGeneratedCocktail } from "~/app/_contexts/CocktailContext";
 import Button from "@material-tailwind/react/components/Button";
@@ -11,15 +10,16 @@ export default function CocktailSearchTextInput() {
   const [promptValue, setPromptValue] = useState("");
   const [loading, setLoading] = useState(false);
   const { setGeneratedCocktail, setLoadingImage } = useGeneratedCocktail();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-resize the textarea
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [promptValue]);
+  // Handle textarea value change and auto-resize
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPromptValue(e.target.value);
+    
+    // Auto-resize logic
+    const textarea = e.target;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
 
   const createCocktail = api.cocktail.generateCocktail.useMutation({
     onMutate: () => {
@@ -69,11 +69,10 @@ export default function CocktailSearchTextInput() {
   return (
     <div className="relative flex w-full max-w-[30rem] flex-col">
       <Textarea
-        ref={textareaRef}
         value={promptValue}
         size="lg"
         label="Ask for a cocktail recipe..."
-        onChange={(e) => setPromptValue(e.target.value)}
+        onChange={handleTextareaChange}
         className="min-h-[3rem] overflow-hidden pr-20 resize-none"
         color="white"
         containerProps={{
