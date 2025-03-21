@@ -79,11 +79,11 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
           >
             {/* Slide 1: Cocktail header only */}
             <div className="px-4 py-4">
-              <Card className="w-full flex-row shadow-lg" placeholder={undefined}>
+              <Card className="w-full flex-col md:flex-row shadow-lg" placeholder={undefined}>
                 {cocktail.image && (
                   <CardHeader
                     placeholder={undefined}
-                    className="m-0 w-full md:w-2/5 shrink-0 rounded-r-none"
+                    className="m-0 w-full h-48 md:h-auto md:w-2/5 shrink-0 rounded-b-none md:rounded-b-lg md:rounded-r-none"
                   >
                     <img
                       src={cocktail.image}
@@ -92,9 +92,9 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
                     />
                   </CardHeader>
                 )}
-                <CardBody placeholder={undefined}>
+                <CardBody placeholder={undefined} className="p-4">
                   <Typography
-                    variant="h3"
+                    variant="h4"
                     color="purple"
                     className="mb-2"
                     placeholder={undefined}
@@ -103,7 +103,7 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
                   </Typography>
                   <Typography
                     color="gray"
-                    className="mb-8"
+                    className="mb-4"
                     variant="paragraph"
                     placeholder={undefined}
                   >
