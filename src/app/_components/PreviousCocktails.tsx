@@ -16,7 +16,6 @@ const PreviousCocktails = () => {
   // Manage cocktails state
   const [cocktails, setCocktails] = useState<Cocktail[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [cursor, setCursor] = useState<string | undefined>(undefined);
   
   // Manage card open state
   const [cardOpen, setCardOpen] = useState(false);
@@ -31,13 +30,17 @@ const PreviousCocktails = () => {
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
-        onSuccess: (data) => {
-          const flattenedCocktails = data.pages.flatMap(page => page.items);
-          setCocktails(flattenedCocktails);
-          setHasMore(data.pages[data.pages.length - 1].nextCursor !== undefined);
-        },
       }
     );
+
+  // Process data changes with useEffect instead of onSuccess
+  useEffect(() => {
+    if (data) {
+      const flattenedCocktails = data.pages.flatMap(page => page.items);
+      setCocktails(flattenedCocktails);
+      setHasMore(data.pages[data.pages.length - 1].nextCursor !== undefined);
+    }
+  }, [data]);
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastCocktailElementRef = useCallback((node: HTMLDivElement | null) => {
