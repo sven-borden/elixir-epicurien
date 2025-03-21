@@ -51,7 +51,8 @@ const PreviousCocktails = () => {
     if (observer.current) observer.current.disconnect();
     
     observer.current = new IntersectionObserver(entries => {
-      if (entries.length > 0 && entries[0].isIntersecting && hasMore) {
+      // Use optional chaining for safer access
+      if (entries.length > 0 && entries[0]?.isIntersecting && hasMore) {
         fetchNextPage();
       }
     });
@@ -69,7 +70,7 @@ const PreviousCocktails = () => {
   }
 
   if (error) {
-    return <div>Error loading cocktails: {error.message}</div>;
+    return <div>Error loading cocktails: {error.message || 'Unknown error'}</div>;
   }
 
   return (
