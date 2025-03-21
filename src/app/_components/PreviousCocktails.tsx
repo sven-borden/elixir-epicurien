@@ -54,7 +54,8 @@ const PreviousCocktails = () => {
     observer.current = new IntersectionObserver(entries => {
       // Use optional chaining for safer access
       if (entries.length > 0 && entries[0]?.isIntersecting && hasMore) {
-        fetchNextPage();
+        // Fix the floating promise by using the void operator
+        void fetchNextPage();
       }
     });
     
