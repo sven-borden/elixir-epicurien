@@ -1,6 +1,7 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
-import { Cocktail } from "../Interfaces/Cocktail";
+import { createContext, useContext, useState } from "react";
+import type { ReactNode } from "react";
+import type { Cocktail } from "@prisma/client";
 interface CocktailContextType {
   generatedCocktail: Cocktail | null;
   setGeneratedCocktail: (

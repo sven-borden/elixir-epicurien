@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import CocktailDetails from "./CocktailDetails";
 import AnimatedWaves from "./AnimatedWaves";
+import Image from "next/image";
 
 export function GeneratedCocktail() {
   const { generatedCocktail, loadingImage } = useGeneratedCocktail();
@@ -42,9 +43,9 @@ export function GeneratedCocktail() {
               className="m-0 w-2/5 shrink-0 rounded-r-none"
               placeholder={undefined}
             >
-              <img
+              <Image
                 src={generatedCocktail.image}
-                alt="card-image"
+                alt={generatedCocktail.name}
                 className="h-full w-full object-cover"
               />
             </CardHeader>
