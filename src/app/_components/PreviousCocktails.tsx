@@ -9,7 +9,8 @@ import {
   Typography,
   Spinner,
 } from "@material-tailwind/react";
-import { Cocktail } from "../Interfaces/Cocktail";
+import type { Cocktail } from "~/server/db/schema";
+import Image from "next/image";
 import CocktailDetails from "./CocktailDetails";
 
 const PreviousCocktails = () => {
@@ -94,10 +95,10 @@ const PreviousCocktails = () => {
                   className="absolute inset-0 m-0 h-full w-full rounded-none"
                   placeholder={undefined}
                 >
-                  <img
-                    src={cocktail.image}
-                    alt="card-image"
-                    className="h-full w-full object-cover"
+                  <Image 
+                    src={cocktail.image} 
+                    alt={cocktail.name} 
+                    className="h-full w-full object-cover" 
                   />
                   <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
                 </CardHeader>

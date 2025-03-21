@@ -8,7 +8,8 @@ import {
 import Dialog, {
   DialogHeader,
 } from "@material-tailwind/react/components/Dialog";
-import { Cocktail } from "../Interfaces/Cocktail";
+import type { Cocktail } from "~/server/db/schema";
+import Image from "next/image";
 
 interface CocktailDetailsProps {
   cocktail: Cocktail;
@@ -85,9 +86,9 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
                     placeholder={undefined}
                     className="m-0 w-full h-48 md:h-auto md:w-2/5 shrink-0 rounded-b-none md:rounded-b-lg md:rounded-r-none"
                   >
-                    <img
+                    <Image
                       src={cocktail.image}
-                      alt="card-image"
+                      alt={cocktail.name}
                       className="h-full w-full object-cover"
                     />
                   </CardHeader>

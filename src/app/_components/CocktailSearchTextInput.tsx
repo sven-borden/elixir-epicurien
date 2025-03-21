@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { api } from "~/trpc/react";
 import { useGeneratedCocktail } from "~/app/_contexts/CocktailContext";
 import Button from "@material-tailwind/react/components/Button";
 import Input from "@material-tailwind/react/components/Input";
-import { Cocktail } from "@prisma/client";
+import type { Cocktail } from "~/server/db/schema";
 
 export default function CocktailSearchTextInput() {
   const [promptValue, setPromptValue] = useState("");
