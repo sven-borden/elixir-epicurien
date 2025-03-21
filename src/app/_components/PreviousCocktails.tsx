@@ -35,7 +35,7 @@ const PreviousCocktails = () => {
 
   // Process data changes with useEffect instead of onSuccess
   useEffect(() => {
-    if (data) {
+    if (data && data.pages.length > 0) {
       const flattenedCocktails = data.pages.flatMap(page => page.items);
       setCocktails(flattenedCocktails);
       setHasMore(data.pages[data.pages.length - 1].nextCursor !== undefined);
