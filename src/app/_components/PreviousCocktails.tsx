@@ -51,7 +51,7 @@ const PreviousCocktails = () => {
     if (observer.current) observer.current.disconnect();
     
     observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
+      if (entries.length > 0 && entries[0].isIntersecting && hasMore) {
         fetchNextPage();
       }
     });
