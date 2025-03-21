@@ -31,7 +31,52 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
     >
       <DialogHeader className="m-0 justify-between p-0" placeholder={undefined}>
         {cocktail && (
-          <Carousel placeholder={undefined}>
+          <Carousel
+            placeholder={undefined}
+            className="rounded-xl"
+            prevArrow={({ handlePrev }) => (
+              <button
+                onClick={handlePrev}
+                className="!absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-purple-500/70 p-2 text-white shadow-md transition-all hover:bg-purple-600"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                  />
+                </svg>
+              </button>
+            )}
+            nextArrow={({ handleNext }) => (
+              <button
+                onClick={handleNext}
+                className="!absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-purple-500/70 p-2 text-white shadow-md transition-all hover:bg-purple-600"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </button>
+            )}
+          >
             {/* Cocktail header */}
             <Card className="w-full flex-row shadow-lg" placeholder={undefined}>
               {cocktail.image && (
