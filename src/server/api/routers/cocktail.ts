@@ -31,10 +31,12 @@ export const cocktailRouter = createTRPCRouter({
         orderBy: {
           createdAt: "desc",
         },
-        include: {
-          ingredients: true,
-          // Include any other relations you need
-        },
+        // Removing the include section as ingredients is a field, not a relation
+        // If you have other valid relations, you can add them like this:
+        // include: {
+        //   user: true,
+        //   // other valid relations
+        // },
       });
 
       let nextCursor: typeof cursor | undefined = undefined;
