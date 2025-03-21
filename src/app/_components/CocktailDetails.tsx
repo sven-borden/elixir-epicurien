@@ -77,75 +77,73 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
               </button>
             )}
           >
-            {/* Cocktail header */}
-            <Card className="w-full flex-row shadow-lg" placeholder={undefined}>
-              {cocktail.image && (
-                <CardHeader
-                  placeholder={undefined}
-                  className="m-0 w-full md:w-2/5 shrink-0 rounded-r-none"
-                >
-                  <img
-                    src={cocktail.image}
-                    alt="card-image"
-                    className="h-full w-full object-cover"
-                  />
-                </CardHeader>
-              )}
-              <CardBody placeholder={undefined}>
-                <Typography
-                  variant="h3"
-                  color="purple"
-                  className="mb-2"
-                  placeholder={undefined}
-                >
-                  {cocktail.name}
-                </Typography>
-                <Typography
-                  color="gray"
-                  className="mb-8"
-                  variant="paragraph"
-                  placeholder={undefined}
-                >
-                  {cocktail.description}
-                </Typography>
-              </CardBody>
-            </Card>
+            {/* Slide 1: Cocktail header only */}
+            <div className="px-4 py-4">
+              <Card className="w-full flex-row shadow-lg" placeholder={undefined}>
+                {cocktail.image && (
+                  <CardHeader
+                    placeholder={undefined}
+                    className="m-0 w-full md:w-2/5 shrink-0 rounded-r-none"
+                  >
+                    <img
+                      src={cocktail.image}
+                      alt="card-image"
+                      className="h-full w-full object-cover"
+                    />
+                  </CardHeader>
+                )}
+                <CardBody placeholder={undefined}>
+                  <Typography
+                    variant="h3"
+                    color="purple"
+                    className="mb-2"
+                    placeholder={undefined}
+                  >
+                    {cocktail.name}
+                  </Typography>
+                  <Typography
+                    color="gray"
+                    className="mb-8"
+                    variant="paragraph"
+                    placeholder={undefined}
+                  >
+                    {cocktail.description}
+                  </Typography>
+                </CardBody>
+              </Card>
+            </div>
 
-            {/* Ingredient card */}
-            <div className="ml-16 mt-8 items-center">
+            {/* Slide 2: Ingredients only */}
+            <div className="p-8">
               <Typography
                 variant="h4"
                 color="deep-purple"
-                className="mb-2"
+                className="mb-4"
                 placeholder={undefined}
               >
                 Ingredients
               </Typography>
               <ul className="list-inside list-disc text-gray-900">
-                <Typography variant="paragraph" placeholder={undefined}>
-                  {cocktail.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))}
-                </Typography>
+                {cocktail.ingredients.map((ingredient, index) => (
+                  <li key={index} className="mb-2 text-lg">{ingredient}</li>
+                ))}
               </ul>
             </div>
 
-            {/* Recipe card */}
-            <div className="ml-16 mt-8 items-center">
+            {/* Slide 3: Recipe only */}
+            <div className="p-8">
               <Typography
                 variant="h4"
                 color="deep-purple"
-                className="mb-2"
+                className="mb-4"
                 placeholder={undefined}
               >
                 Recipe
               </Typography>
               <ol className="list-inside list-decimal text-gray-900">
-                <Typography variant="paragraph" placeholder={undefined}>
-                  {cocktail.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                  ))}
-                </Typography>
+                {cocktail.instructions.map((instruction, index) => (
+                  <li key={index} className="mb-3 text-lg">{instruction}</li>
+                ))}
               </ol>
             </div>
           </Carousel>
