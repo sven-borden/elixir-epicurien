@@ -9,7 +9,7 @@ import {
   Typography,
   Spinner,
 } from "@material-tailwind/react";
-import type { Cocktail } from "~/server/db/schema";
+import type { Cocktail } from "@prisma/client";
 import Image from "next/image";
 import CocktailDetails from "./CocktailDetails";
 

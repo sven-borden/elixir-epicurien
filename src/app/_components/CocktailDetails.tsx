@@ -8,7 +8,7 @@ import {
 import Dialog, {
   DialogHeader,
 } from "@material-tailwind/react/components/Dialog";
-import type { Cocktail } from "~/server/db/schema";
+import type { Cocktail } from "@prisma/client";
 import Image from "next/image";
 
 interface CocktailDetailsProps {

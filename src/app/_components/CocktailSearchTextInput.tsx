@@ -5,7 +5,7 @@ import { api } from "~/trpc/react";
 import { useGeneratedCocktail } from "~/app/_contexts/CocktailContext";
 import Button from "@material-tailwind/react/components/Button";
 import Input from "@material-tailwind/react/components/Input";
-import type { Cocktail } from "~/server/db/schema";
+import type { Cocktail } from "@prisma/client";
 
 export default function CocktailSearchTextInput() {
   const [promptValue, setPromptValue] = useState("");
