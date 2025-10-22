@@ -10,7 +10,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 import { fakePicture } from "~/server/constants/fakePicture";
 
-import sharp from "sharp";
+import { uploadImage, convertPngToWebp } from "~/server/lib/storage";
+
 const anthropic = new Anthropic();
 const openai = new OpenAI();
 
@@ -113,34 +114,42 @@ export const cocktailRouter = createTRPCRouter({
       }
 
       const imagePrompt = `${cocktail.name}: ${cocktail.description}`;
-      const base64Image = await generateImage({ prompt: imagePrompt });
-
-      // Update the cocktail with the generated image
-      await ctx.db.cocktail.update({
-        where: { id: input.id },
-        data: { image: base64Image },
+      const imageUrl = await generateImage({
+        prompt: imagePrompt,
+        cocktailId: input.id
       });
 
-      return base64Image;
+      // Update the cocktail with the cloud storage URL
+      await ctx.db.cocktail.update({
+        where: { id: input.id },
+        data: { image: imageUrl },
+      });
+
+      return imageUrl;
     }),
 });
 
 /**
- * Generates an image based on the provided prompt using the OpenAI API.
+ * Generates an image based on the provided prompt using the OpenAI API
+ * and uploads it to Vercel Blob Storage.
  *
- * @param arg0 - An object containing the prompt string.
+ * @param arg0 - An object containing the prompt string and cocktail ID.
  * @param arg0.prompt - The prompt to generate the image from.
- * @returns A promise that resolves to a base64 encoded image string.
+ * @param arg0.cocktailId - The ID of the cocktail (used for naming the file).
+ * @returns A promise that resolves to the public URL of the uploaded image.
  *
- * @throws Will throw an error if the OpenAI API request fails.
+ * @throws Will throw an error if the OpenAI API request or upload fails.
  *
  * @example
  * ```typescript
- * const image = await generateImage({ prompt: "A futuristic cityscape" });
- * console.log(image); // Logs the base64 encoded image string
+ * const imageUrl = await generateImage({
+ *   prompt: "A vibrant tropical cocktail",
+ *   cocktailId: "clxyz123"
+ * });
+ * console.log(imageUrl); // Logs the cloud storage URL
  * ```
  */
-async function generateImage(arg0: { prompt: string }) {
+async function generateImage(arg0: { prompt: string; cocktailId: string }) {
   const environment = process.env.NODE_ENV || "development";
   console.log("Environment: " + environment);
   if (environment === "development") {
@@ -158,22 +167,19 @@ async function generateImage(arg0: { prompt: string }) {
     response_format: "b64_json",
   });
 
-  // TODO: Extract to a helper function
-  const base64png = response.data[0]?.b64_json ? response.data[0].b64_json : "";
+  const base64png = response.data[0]?.b64_json ?? "";
+  if (!base64png) {
+    throw new Error("Failed to generate image: No image data returned from OpenAI");
+  }
 
-  const base64Buffer = Buffer.from(base64png, "base64");
-  const webpBuffer = await sharp(base64Buffer)
-    .webp({
-      quality: 75,
-      alphaQuality: 75,
-      lossless: false,
-      effort: 2,
-    })
-    .toBuffer();
+  // Convert PNG to WebP for smaller file size
+  const pngBuffer = Buffer.from(base64png, "base64");
+  const webpBuffer = await convertPngToWebp(pngBuffer, 75);
 
-  const base64webp = "data:image/webp;base64," + webpBuffer.toString("base64");
+  // Upload to cloud storage and get public URL
+  const imageUrl = await uploadImage(webpBuffer, arg0.cocktailId);
 
-  return base64webp;
+  return imageUrl;
 }
 
 /**

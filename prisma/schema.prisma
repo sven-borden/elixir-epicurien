@@ -21,11 +21,15 @@ model Cocktail {
     description String?
     ingredients String[]
     instructions String[]
-    image       String?
+    image       String?  // Stores cloud storage URL (e.g., Vercel Blob Storage)
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     userId      String?
     user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([createdAt(sort: Desc)])  // Speed up getLatestCocktails queries
+    @@index([userId])                 // Speed up user-specific queries
+    @@index([name])                   // Speed up duplicate cocktail name checks
 }
 // Necessary for Next auth
 model Account {
