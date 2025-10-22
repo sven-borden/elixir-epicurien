@@ -59,15 +59,33 @@ export const cocktailRouter = createTRPCRouter({
       interface CocktailData {
         title: string;
         description: string;
-        ingredients: string[];
+        ingredients: string[] | Array<{ item: string; quantity: string }>;
         instructions: string[];
       }
 
       const anthropicMessage = await createAnthropicMessage(input.query);
 
-      const cocktailData: CocktailData = JSON.parse(
-        (anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}"
-      ) as CocktailData;
+      // Extract text and remove markdown code blocks if present
+      let textContent = (anthropicMessage.content[0] as Anthropic.TextBlock).text ?? "{}";
+
+      // Remove markdown code blocks (```json ... ``` or ``` ... ```)
+      textContent = textContent.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+
+      const cocktailData: CocktailData = JSON.parse(textContent) as CocktailData;
+
+      // Normalize ingredients to string array format
+      let ingredientsArray: string[];
+      if (Array.isArray(cocktailData.ingredients) && cocktailData.ingredients.length > 0) {
+        if (typeof cocktailData.ingredients[0] === 'string') {
+          ingredientsArray = cocktailData.ingredients as string[];
+        } else {
+          // Convert object format to string format
+          ingredientsArray = (cocktailData.ingredients as Array<{ item: string; quantity: string }>)
+            .map(ing => `${ing.quantity} ${ing.item}`);
+        }
+      } else {
+        ingredientsArray = [];
+      }
 
       const existingCocktail = await ctx.db.cocktail.findFirst({
         where: { name: cocktailData.title },
@@ -82,7 +100,7 @@ export const cocktailRouter = createTRPCRouter({
           data: {
             name: cocktailData.title,
             description: cocktailData.description,
-            ingredients: cocktailData.ingredients,
+            ingredients: ingredientsArray,
             instructions: cocktailData.instructions,
           },
         });
@@ -93,7 +111,7 @@ export const cocktailRouter = createTRPCRouter({
         data: {
           name: cocktailData.title,
           description: cocktailData.description,
-          ingredients: cocktailData.ingredients,
+          ingredients: ingredientsArray,
           instructions: cocktailData.instructions,
           user: { connect: { id: ctx.session.user.id } },
         },

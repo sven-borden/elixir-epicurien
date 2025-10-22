@@ -96,11 +96,22 @@ const PreviousCocktails = () => {
                   className="absolute inset-0 m-0 h-full w-full rounded-none"
                   placeholder={undefined}
                 >
-                  <Image 
-                    src={cocktail.image} 
-                    alt={cocktail.name} 
-                    className="h-full w-full object-cover" 
-                  />
+                  {cocktail.image.startsWith('data:') ? (
+                    // Use regular img tag for base64 images (development mode)
+                    <img
+                      src={cocktail.image}
+                      alt={cocktail.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    // Use Next.js Image component for cloud URLs (production)
+                    <Image
+                      src={cocktail.image}
+                      alt={cocktail.name}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
                   <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
                 </CardHeader>
               )}

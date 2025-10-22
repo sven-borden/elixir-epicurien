@@ -84,13 +84,24 @@ const CocktailDetails: React.FC<CocktailDetailsProps> = ({
                 {cocktail.image && (
                   <CardHeader
                     placeholder={undefined}
-                    className="m-0 w-full h-48 md:h-auto md:w-2/5 shrink-0 rounded-b-none md:rounded-b-lg md:rounded-r-none"
+                    className="m-0 w-full h-48 md:h-auto md:w-2/5 shrink-0 rounded-b-none md:rounded-b-lg md:rounded-r-none relative"
                   >
-                    <Image
-                      src={cocktail.image}
-                      alt={cocktail.name}
-                      className="h-full w-full object-cover"
-                    />
+                    {cocktail.image.startsWith('data:') ? (
+                      // Use regular img tag for base64 images (development mode)
+                      <img
+                        src={cocktail.image}
+                        alt={cocktail.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      // Use Next.js Image component for cloud URLs (production)
+                      <Image
+                        src={cocktail.image}
+                        alt={cocktail.name}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
                   </CardHeader>
                 )}
                 <CardBody placeholder={undefined} className="p-4">

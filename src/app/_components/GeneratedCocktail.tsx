@@ -40,14 +40,25 @@ export function GeneratedCocktail() {
             <CardHeader
               shadow={false}
               floated={false}
-              className="m-0 w-2/5 shrink-0 rounded-r-none"
+              className="m-0 w-2/5 shrink-0 rounded-r-none relative"
               placeholder={undefined}
             >
-              <Image
-                src={generatedCocktail.image}
-                alt={generatedCocktail.name}
-                className="h-full w-full object-cover"
-              />
+              {generatedCocktail.image.startsWith('data:') ? (
+                // Use regular img tag for base64 images (development mode)
+                <img
+                  src={generatedCocktail.image}
+                  alt={generatedCocktail.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                // Use Next.js Image component for cloud URLs (production)
+                <Image
+                  src={generatedCocktail.image}
+                  alt={generatedCocktail.name}
+                  fill
+                  className="object-cover"
+                />
+              )}
             </CardHeader>
           )
         )}
